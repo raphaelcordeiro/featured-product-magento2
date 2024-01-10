@@ -23,6 +23,8 @@ class FeaturedProduct
     }
 
     /**
+     * Obtém quantidade em estoque do produto em destaque
+     *
      * @return int
      */
     final public function getQuantity(): int
@@ -39,6 +41,8 @@ class FeaturedProduct
     }
 
     /**
+     * Carrega produto em destaque
+     *
      * @return false|mixed|null
      */
     final public function getFeaturedProduct(): mixed

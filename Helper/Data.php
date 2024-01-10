@@ -2,36 +2,38 @@
 
 namespace MagentoModules\FeaturedProduct\Helper;
 
-use Magento\Catalog\Model\Product;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\UrlInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Store\Model\ScopeInterface;
-use Magento\Catalog\Helper\Image as ImageHelper;
+use Magento\Catalog\Model\Product;
+use Magento\Framework\View\Asset\Repository as AssetRepository;
 
 class Data extends AbstractHelper
 {
-    /**
-     * @var ImageHelper
-     */
-    private ImageHelper $imageHelper;
 
     /**
+     * @param AssetRepository $assetRepo
+     * @param StoreManagerInterface $storeManager
      * @param Context $context
      * @param ScopeConfigInterface $scopeConfig
-     * @param ImageHelper $imageHelper
      */
     public function __construct(
+        private readonly AssetRepository $assetRepo,
+        private readonly StoreManagerInterface $storeManager,
         Context $context,
-        ScopeConfigInterface $scopeConfig,
-        ImageHelper $imageHelper
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->scopeConfig = $scopeConfig;
-        $this->imageHelper = $imageHelper;
         parent::__construct($context);
     }
 
     /**
+     * Checa se o módulo está habilitado
+     *
      * @return bool
      */
     final public function isFeaturedProductEnabled(): bool
@@ -40,6 +42,8 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Retorna o SKU do produto em destaque
+     *
      * @return string
      */
     final public function getFeaturedProductSku(): string
@@ -48,6 +52,8 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Retorna configurações do módulo com base nos parâmetros passados
+     *
      * @param string $path
      * @param string $scopeType
      * @param int|null $scopeCode
@@ -59,11 +65,21 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Obtem a imagem do produto ou imagem padrão caso não tenha imagem
+     *
      * @param Product $product
      * @return string
+     * @throws NoSuchEntityException
      */
     final public function getProductImage(Product $product) : string
     {
-        return $this->imageHelper->init($product, 'product_base_image')->getUrl();
+        $baseUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+
+            if ($product->getImage() && $product->getImage() !== 'no_selection') {
+                $productImage = $baseUrl . 'catalog/product' . $product->getImage();
+            } else {
+                $productImage = $this->assetRepo->getUrl('Magento_Catalog::images/product/placeholder/image.jpg');
+            }
+        return $productImage;
     }
 }

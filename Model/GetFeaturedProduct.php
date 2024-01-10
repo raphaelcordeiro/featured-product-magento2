@@ -9,6 +9,9 @@ use MagentoModules\FeaturedProduct\Model\Resolver\FeaturedProductResolver;
 class GetFeaturedProduct implements GetFeaturedProductInterface
 {
 
+    /**
+     * @param FeaturedProductResolver $featuredProductModel
+     */
     public function __construct(
         private readonly FeaturedProductResolver $featuredProductModel
     )
@@ -17,6 +20,8 @@ class GetFeaturedProduct implements GetFeaturedProductInterface
     }
 
     /**
+     * Retorna o array com os dados do produto em destaque
+     *
      * @return array
      */
     final public function execute() : array

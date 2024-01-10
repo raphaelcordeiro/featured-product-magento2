@@ -19,6 +19,7 @@ define(['uiComponent', 'jquery', 'ko'], function (Component, $, ko) {
                 image: null,
                 url: null
             });
+            this.dataLoaded = false; // Flag para verificar se os dados foram carregados inicialmente
             this.loadProductData();
             this.startAutoRefresh();
         },
@@ -29,10 +30,19 @@ define(['uiComponent', 'jquery', 'ko'], function (Component, $, ko) {
                 url: '/rest/V1/get-featured-product/',
                 type: 'GET',
                 success: function (response) {
-                        if (Array.isArray(response) && response.length === 5) {
-                            let [name, price, stock, image, url] = response;
-                            let productObj = { name, price, stock, image, url };
-                            self.productData(productObj);
+                    if (Array.isArray(response) && response.length === 5) {
+                        // Transforma o array em um objeto
+                        let [name, price, stock, image, url] = response;
+
+                        if (!self.dataLoaded) {
+                            // Carrega todos os dados na primeira vez
+                            self.productData({ name, price, stock, image, url });
+                            self.dataLoaded = true;
+                        } else {
+                            // Atualiza apenas o stock nas vezes subsequentes
+                            let currentData = self.productData();
+                            self.productData(Object.assign({}, currentData, { stock: stock }));
+                        }
                     }
                 }
             });

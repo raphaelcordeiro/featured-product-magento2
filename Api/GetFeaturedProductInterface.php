@@ -5,7 +5,7 @@ namespace MagentoModules\FeaturedProduct\Api;
 interface GetFeaturedProductInterface
 {
     /**
-     * Get Featured Product.
+     * Interface da Api do produto em destaque.
      *
      * @return array
      */

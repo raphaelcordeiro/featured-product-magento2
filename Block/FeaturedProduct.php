@@ -29,12 +29,19 @@ class FeaturedProduct extends Template
         $this->featuredProductModel = $featuredProductModel;
     }
 
+    /**
+     * Checa se o módulo está habilitado
+     *
+     * @return bool
+     */
     final public function isFeaturedProductEnabled(): bool
     {
         return $this->helperData->isFeaturedProductEnabled();
     }
 
     /**
+     * Retorna o produto em destaque
+     *
      * @return mixed
      */
     final public function getFeaturedProduct(): mixed

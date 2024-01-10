@@ -2,6 +2,7 @@
 
 namespace MagentoModules\FeaturedProduct\Model\Resolver;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use MagentoModules\FeaturedProduct\Model\FeaturedProduct;
 use MagentoModules\FeaturedProduct\Helper\Data as FeaturedProductHelper;
 use Magento\Framework\Pricing\Helper\Data as PriceHelper;
@@ -21,12 +22,17 @@ class FeaturedProductResolver
     }
 
     /**
+     * Resolver para tratar os dados do produto em destaque.
+     *
      * @return array
+     * @throws NoSuchEntityException
      */
     final public function resolver() : array{
         $product = $this->featuredProduct->getFeaturedProduct();
         $result = [];
         if($product){
+
+            // Tratamento dos dados do produto em destaque
             $result = [
                 'name'  => $product->getName(),
                 'price' => $this->priceHelper->currency($product->getPrice(), true, false),
