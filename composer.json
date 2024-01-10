@@ -1,0 +1,23 @@
+{
+  "name": "magento-modules/module-featured-product",
+  "version": "1.0.0",
+  "description": "N/A",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "magento/module-catalog": "104.0.*",
+    "magento/module-cms": "104.0.*",
+    "magento/module-inventory": "1.2.*"
+  },
+  "license": [
+    "Massachusetts Institute of Technology License (MITL)"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "MagentoModules\\FeaturedProduct\\": ""
+    }
+  }
+}

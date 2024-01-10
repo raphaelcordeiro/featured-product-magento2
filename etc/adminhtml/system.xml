@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="featuredproduct" translate="label" sortOrder="10">
+            <label>Featured Product</label>
+        </tab>
+        <section id="featured_product_settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Featured Product Settings</label>
+            <tab>featuredproduct</tab>
+            <resource>MagentoModules_FeaturedProduct::config_featured_product_settings</resource>
+            <group id="featured_product_settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Featured Product Settings</label>
+                <field id="enable_featured_product" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="featured_product_sku" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Featured Product SKU</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

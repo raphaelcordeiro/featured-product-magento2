@@ -1,0 +1,25 @@
+<?php
+/**
+ * @var $block \MagentoModules\FeaturedProduct\Block\FeaturedProduct
+ */
+?>
+<?php if($block->isFeaturedProductEnabled()): ?>
+<h2>Featured Product</h2>
+<div id="featured-product-container" data-bind="scope: 'featuredProductComponent'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "featuredProductComponent": {
+                    "component": "MagentoModules_FeaturedProduct/js/featured-product-component"
+                }
+            }
+        }
+    }
+}
+<?php endif; ?>
+</script>
